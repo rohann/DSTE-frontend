@@ -15,6 +15,6 @@
 -->
 
 <resources>
-    <string name="app_name">StopWatch</string>
+    <string name="app_name">Awearable</string>
     <string name="stop">Stop</string>
 </resources>
