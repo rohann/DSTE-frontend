@@ -16,14 +16,16 @@
 
 package com.google.android.glass.awearable;
 
-import com.google.android.glass.timeline.LiveCard;
-import com.google.android.glass.timeline.LiveCard.PublishMode;
-
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.RemoteViews;
+
+import com.google.android.glass.timeline.LiveCard;
 
 /**
  * Service owning the LiveCard living in the timeline.
@@ -31,17 +33,25 @@ import android.util.Log;
 public class StopwatchService extends Service {
 
     private static final String LIVE_CARD_TAG = "stopwatch";
-
+    private static final String TAG = "SliderService";
     private ChronometerDrawer mCallback;
 
     private LiveCard mLiveCard;
 
+    private final IBinder mBinder = new LocalBinder();
+    
+    public class LocalBinder extends Binder {
+        StopwatchService getService() {
+            return StopwatchService.this;
+        }
+    }
+    
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
-    @Override
+   /* @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (mLiveCard == null) {
             mLiveCard = new LiveCard(this, LIVE_CARD_TAG);
@@ -60,6 +70,55 @@ public class StopwatchService extends Service {
         }
 
         return START_STICKY;
+    }*/
+    
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId){
+    	if(mLiveCard==null){
+    		mLiveCard = new LiveCard(this, LIVE_CARD_TAG);
+       	 	
+       	 	RemoteViews remoteviews=new RemoteViews(this.getPackageName(), R.layout.livecard);//left to check
+      		mLiveCard.setViews(remoteviews);
+      		
+      		
+      		mLiveCard.setAction(PendingIntent.getActivity(this,0, intent,0));
+      		mLiveCard.publish(LiveCard.PublishMode.REVEAL);
+      		try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+      		try {
+				String text = askForData(this);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	return START_STICKY;
+    }
+    
+    public String askForData(Context context) throws InterruptedException{
+    	RemoteViews remoteviews = new RemoteViews(context.getPackageName(),R.layout.livecard); // Defining a view. We need to give some text to the view. And it has to be the address.
+		remoteviews.setTextViewText(R.id.livecard_content, "What would you like to do?");
+		mLiveCard.setViews(remoteviews); 
+		
+		
+		Intent intent = new Intent(context, VoiceActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		mLiveCard.setAction(PendingIntent.getActivity(context, 0, intent, 0));
+
+		if(! mLiveCard.isPublished()){
+			mLiveCard.publish(LiveCard.PublishMode.REVEAL);
+			
+		}
+		else{
+			Log.d(TAG,"liveCard not published");
+			Thread.sleep(1000);
+		}
+		startActivity(intent);
+    	return "";
     }
 
     @Override

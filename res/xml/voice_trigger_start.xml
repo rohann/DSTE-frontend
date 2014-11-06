@@ -14,4 +14,4 @@
      limitations under the License.
 -->
 
-<trigger command="START_A_STOPWATCH" />
+<trigger keyword="@string/glass_voice_trigger" />

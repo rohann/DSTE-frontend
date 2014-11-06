@@ -17,4 +17,6 @@
 <resources>
     <string name="app_name">Awearable</string>
     <string name="stop">Stop</string>
+    <string name="glass_voice_trigger">open caretool</string>
+    <string name="livecard_content">Welcome to Awearable</string>
 </resources>
