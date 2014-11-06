@@ -25,7 +25,7 @@ public class VoiceActivity  extends Activity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String body = "Welcome to Awereable.\nYou have two options:\n1. List all items\n2.Query a specific item.\n";
+		String body = "Welcome to Awereable.\nYou have two options:\n1. say allList all items\n2.Query a specific item.\n";
 		body=body+"\nTap to continue.\n";
 		setCard(body,footnote);
 	}
@@ -62,22 +62,12 @@ public class VoiceActivity  extends Activity {
 	        String text= parseText(spokenText);
 	        
 	        setCard(text,footnote);
-	        
-	        	//setCard("You requested for a specific query.",footnote);
-	        
-	     //   setCard(spokenText,footnote);
-	        
-	        // Do something with spokenText.
 	    }
 	    super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	private String parseText(String text){
-		//if(text.contains("all")){
-			return ParseText.withAll();
-	//}
-		
-		//return "";
+			return ParseText.withAll(text); // returning json response for now
 	}
 	
 	
