@@ -28,7 +28,7 @@ public class VoiceActivity  extends Activity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String body = "Welcome to Lexcion.\nYou have two options:\n1. say allList all items\n2.Query a specific item.\n";
+		String body = "Welcome to Lexcion.\nYou have three options:\n1. List all items\n2. List all properties\n3.Query a specific item.\n";
 		body=body+"\nTap to continue.\n";
 		setCard(body,footnote);
 	}
