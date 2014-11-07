@@ -121,7 +121,7 @@ public class ParseText {
 				}
 				else if(item!=""){
 					jsonArray = service.getProperty(item,"description");
-					response=parseProperty(jsonArray,items);
+					response=parseProperty(jsonArray,item);
 				}
 				else if(property!="")
 					response= "Which item do you need the "+property+" of?";
