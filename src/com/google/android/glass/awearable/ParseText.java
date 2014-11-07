@@ -31,7 +31,7 @@ import dto.CareToolParser;
 public class ParseText {
 
 	HashMap<String,String> mapping = new HashMap<String,String>();
-	static String baseURL = "http://10.0.14.135:9000";
+	static String baseURL = "http://54.172.222.22:9000";
 	
 	/*public HashMap<String,String[]> parse(String input){
 		if(input.contains("all")){
@@ -49,7 +49,7 @@ public class ParseText {
 		Gson gson = new Gson();
 		
 		RestAdapter restAdapter = new RestAdapter.Builder()
-		.setEndpoint("http://10.0.14.135:9000")
+		.setEndpoint("http://54.172.222.22:9000")
 		.setConverter(new GsonConverter(gson))
 		.build();
 		
@@ -124,7 +124,7 @@ public class ParseText {
 					response=parseProperty(jsonArray,property);
 				}
 				else if(property!="")
-					response= "Of which item do you need the "+property+" of?";
+					response= "Which item do you need the "+property+" of?";
 			}
 		}catch (RetrofitError e) {
 			  Log.d("ERROR", "" +e.getCause().toString());

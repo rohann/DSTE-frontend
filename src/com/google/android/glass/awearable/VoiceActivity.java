@@ -22,13 +22,13 @@ import android.view.MenuItem;
 public class VoiceActivity  extends Activity {
 
 	private static final int SPEECH_REQUEST = 0;
-	private String footnote = "Product of Awearable";
+	private String footnote = "Product of Lexicon";
 	
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String body = "Welcome to Awereable.\nYou have two options:\n1. say allList all items\n2.Query a specific item.\n";
+		String body = "Welcome to Lexcion.\nYou have two options:\n1. say allList all items\n2.Query a specific item.\n";
 		body=body+"\nTap to continue.\n";
 		setCard(body,footnote);
 	}
