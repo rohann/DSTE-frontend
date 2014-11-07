@@ -1,8 +1,11 @@
 package com.google.android.glass.awearable;
 
 
+import java.io.IOException;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.android.glass.app.Card;
 
 import android.app.Activity;
@@ -59,14 +62,26 @@ public class VoiceActivity  extends Activity {
 	        List<String> results = data.getStringArrayListExtra(
 	                RecognizerIntent.EXTRA_RESULTS);
 	        String spokenText = results.get(0);
-	        String text= parseText(spokenText);
+	        String text="";
+			try {
+				text = parseText(spokenText);
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	        
 	        setCard(text,footnote);
 	    }
 	    super.onActivityResult(requestCode, resultCode, data);
 	}
 	
-	private String parseText(String text){
+	private String parseText(String text) throws JsonParseException, JsonMappingException, IOException{
 			return ParseText.withAll(text); // returning json response for now
 	}
 	
